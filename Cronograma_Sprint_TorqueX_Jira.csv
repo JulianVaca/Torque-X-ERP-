@@ -1,11 +1,1 @@
-ID,Summary,Description,Assignee,Issue Type,Start Date,End Date,Duration (days)
-T1,Configurar entorno de desarrollo,"Docker, BD, estructura del repo",Nicolás,Tarea,2025-03-10,2025-03-11,2
-T2,Backend - Autenticación,Endpoint login/registro con JWT,Felipe,Historia,2025-03-12,2025-03-14,3
-T3,Frontend - Autenticación,Login/registro con React,Camila,Historia,2025-03-15,2025-03-18,4
-T4,Backend - Gestión de citas,Microservicio para agendar y listar citas,Felipe,Historia,2025-03-19,2025-03-22,4
-T5,Frontend - Citas,Formulario + listado de citas,Julian,Historia,2025-03-23,2025-03-26,4
-T6,QA - Casos de prueba funcionales,Definición y ejecución de pruebas,Camila,Tarea,2025-03-27,2025-03-30,4
-T7,Documentación técnica del sprint,"Arquitectura, decisiones técnicas",Nicolás,Tarea,2025-03-31,2025-04-03,4
-T8,Recolección de evidencias,"Capturas, logs, evidencia funcional",Felipe,Tarea,2025-04-04,2025-04-06,3
-T9,Informe final (APA),Redacción y formateo en APA,Julian,Tarea,2025-04-07,2025-04-10,4
-T10,Revisión general del Sprint,Revisión en equipo y retroalimentación,Todos,Reunión,2025-04-11,2025-04-11,1
+

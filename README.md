@@ -62,11 +62,11 @@ npm run dev
 Configura las variables de entorno (`.env`) para el backend y frontend con las claves necesarias (base de datos, JWT secret, etc.)
 
 ## 👨‍💻 Equipo de desarrollo
-
-- Julian Vaca  
+  
 - Nicolás Ramírez  
 - Camila Correa  
 - Felipe Arenas
+- Julián Vaca
 
 ## 📄 Licencia
 

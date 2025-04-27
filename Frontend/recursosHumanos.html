@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recursos Humanos - Torque X</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      background-image: url('imagenes/RH.jpg'); /* Puedes cambiar esta imagen de fondo */
+      background-size: 1250px 600px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background-color: #347df2;
+      color: white;
+      padding: 15px 0;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+    nav ul li {
+      display: inline;
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    main {
+      padding: 20px;
+    }
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: white;
+      font-size: 18px;
+    }
+    th, td {
+      padding: 15px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #347df2;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    form {
+      margin: 30px auto;
+      background: rgba(255,255,255,0.95);
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+    input[type="text"], input[type="email"], input[type="number"], input[type="date"] {
+      padding: 10px;
+      margin: 10px;
+      width: 250px;
+      font-size: 16px;
+    }
+    input[type="submit"] {
+      background-color: #347df2;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .resumen {
+      margin: 30px;
+      font-size: 20px;
+      color: white;
+    }
+    .resumen p {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Torque X - Recursos Humanos</h1>
+    <nav>
+      <ul>
+        <li><a href="inventario.html">Inventario</a></li>
+        <li><a href="clientes.html">Clientes</a></li>
+        <li><a href="proveedores.html">Proveedores</a></li>
+        <li><a href="ventas.html">Ventas</a></li>
+        <li><a href="contabilidad.html">Contabilidad</a></li>
+        <li><a href="rrhh.html">Recursos Humanos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Registro de Empleados</h2>
+
+    <form id="empleadoForm">
+      <input type="text" id="nombre" placeholder="Nombre Completo" required>
+      <input type="text" id="puesto" placeholder="Puesto" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="text" id="telefono" placeholder="Teléfono" required>
+      <input type="number" id="salario" placeholder="Salario Mensual" required>
+      <input type="date" id="fechaIngreso" required>
+      <br>
+      <input type="submit" value="Agregar Empleado">
+    </form>
+
+    <table id="empleadosTabla">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Puesto</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Salario</th>
+          <th>Fecha de Ingreso</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Empleados agregados aparecerán aquí -->
+      </tbody>
+    </table>
+
+    <section class="resumen">
+      <h3>Resumen de Recursos Humanos</h3>
+      <p id="totalEmpleados">Total Empleados: 0</p>
+      <p id="salarioPromedio">Salario Promedio: $0.00</p>
+    </section>
+  </main>
+
+  <script>
+    let empleados = [];
+
+    function actualizarResumen() {
+      const total = empleados.length;
+      const salarioTotal = empleados.reduce((sum, emp) => sum + emp.salario, 0);
+      const salarioPromedio = total > 0 ? salarioTotal / total : 0;
+
+      document.getElementById('totalEmpleados').innerText = `Total Empleados: ${total}`;
+      document.getElementById('salarioPromedio').innerText = `Salario Promedio: $${salarioPromedio.toFixed(2)}`;
+    }
+
+    function agregarEmpleadoTabla(empleado) {
+      const tabla = document.getElementById('empleadosTabla').getElementsByTagName('tbody')[0];
+      const nuevaFila = tabla.insertRow();
+
+      nuevaFila.insertCell(0).textContent = empleado.nombre;
+      nuevaFila.insertCell(1).textContent = empleado.puesto;
+      nuevaFila.insertCell(2).textContent = empleado.email;
+      nuevaFila.insertCell(3).textContent = empleado.telefono;
+      nuevaFila.insertCell(4).textContent = `$${empleado.salario.toFixed(2)}`;
+      nuevaFila.insertCell(5).textContent = empleado.fechaIngreso;
+    }
+
+    document.getElementById('empleadoForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const nombre = document.getElementById('nombre').value;
+      const puesto = document.getElementById('puesto').value;
+      const email = document.getElementById('email').value;
+      const telefono = document.getElementById('telefono').value;
+      const salario = parseFloat(document.getElementById('salario').value);
+      const fechaIngreso = document.getElementById('fechaIngreso').value;
+
+      if (nombre && puesto && email && telefono && !isNaN(salario) && fechaIngreso) {
+        const nuevoEmpleado = { nombre, puesto, email, telefono, salario, fechaIngreso };
+        empleados.push(nuevoEmpleado);
+        agregarEmpleadoTabla(nuevoEmpleado);
+        actualizarResumen();
+        document.getElementById('empleadoForm').reset();
+      }
+    });
+  </script>
+</body>
+</html>

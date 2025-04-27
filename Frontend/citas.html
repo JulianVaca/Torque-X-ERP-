@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Citas - Torque X</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      background-image: url('imagenes/R1.jpg');
+      background-size: 1250px 600px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background-color: #347df2;
+      color: white;
+      padding: 15px 0;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+    nav ul li {
+      display: inline;
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    main {
+      padding: 20px;
+    }
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: white;
+      font-size: 18px;
+    }
+    th, td {
+      padding: 15px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #347df2;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    .acciones {
+      margin: 20px 0;
+    }
+    .acciones button {
+      background-color: #347df2;
+      color: white;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .acciones button:hover {
+      background-color: #245bb5;
+    }
+    .formulario {
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      width: 300px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+      display: none;
+    }
+    .formulario input, .formulario select {
+      width: 90%;
+      padding: 8px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Torque X - Sistema de Gestión</h1>
+    <nav>
+      <ul>
+        <li><a href="ventas.html">Ventas</a></li>
+        <li><a href="inventario.html">Inventario</a></li>
+        <li><a href="clientes.html">Clientes</a></li>
+        <li><a href="reportes.html">Reportes</a></li>
+        <li><a href="citas.html">Citas</a></li>
+        <li><a href="contabilidad.html">Contabilidad</a></li>
+        <li><a href="recursosHumanos.html">Recursos Humanos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Gestión de Citas</h2>
+
+    <div class="acciones">
+      <button onclick="mostrarFormulario('agendar')">Agendar Nueva Cita</button>
+      <button onclick="mostrarFormulario('consultar')">Consultar Cita</button>
+      <button onclick="mostrarFormulario('cambiar')">Cambiar Cita</button>
+      <button onclick="mostrarFormulario('cancelar')">Cancelar Cita</button>
+    </div>
+
+    <table id="tablaCitas">
+      <thead>
+        <tr>
+          <th>ID Cita</th>
+          <th>Nombre Cliente</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Servicio</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>C101</td><td>Juan Pérez</td><td>2025-05-05</td><td>10:00 AM</td><td>Mantenimiento</td><td>Agendada</td></tr>
+        <tr><td>C102</td><td>María López</td><td>2025-05-06</td><td>2:00 PM</td><td>Revisión General</td><td>Agendada</td></tr>
+      </tbody>
+    </table>
+
+    <div id="formulario" class="formulario">
+      <h3 id="tituloFormulario"></h3>
+      <input type="text" id="idCita" placeholder="ID Cita (Ej: C103)">
+      <input type="text" id="nombreCliente" placeholder="Nombre Cliente">
+      <input type="date" id="fechaCita">
+      <input type="time" id="horaCita">
+      <input type="text" id="servicioCita" placeholder="Servicio">
+      <select id="estadoCita">
+        <option value="Agendada">Agendada</option>
+        <option value="Cancelada">Cancelada</option>
+        <option value="Pagada">Pagada</option>
+      </select>
+      <button onclick="guardarFormulario()">Guardar</button>
+    </div>
+
+  </main>
+
+  <script>
+    let accionActual = '';
+
+    function mostrarFormulario(accion) {
+      accionActual = accion;
+      document.getElementById('formulario').style.display = 'block';
+
+      if (accion === 'agendar') {
+        document.getElementById('tituloFormulario').innerText = 'Agendar Nueva Cita';
+        limpiarCampos();
+      } else if (accion === 'cambiar') {
+        document.getElementById('tituloFormulario').innerText = 'Cambiar Cita';
+        limpiarCampos();
+      } else if (accion === 'cancelar') {
+        document.getElementById('tituloFormulario').innerText = 'Cancelar Cita';
+        limpiarCampos();
+      }
+    }
+
+    function limpiarCampos() {
+      document.getElementById('idCita').value = '';
+      document.getElementById('nombreCliente').value = '';
+      document.getElementById('fechaCita').value = '';
+      document.getElementById('horaCita').value = '';
+      document.getElementById('servicioCita').value = '';
+      document.getElementById('estadoCita').value = 'Agendada';
+    }
+
+    function guardarFormulario() {
+      const id = document.getElementById('idCita').value;
+      const nombre = document.getElementById('nombreCliente').value;
+      const fecha = document.getElementById('fechaCita').value;
+      const hora = document.getElementById('horaCita').value;
+      const servicio = document.getElementById('servicioCita').value;
+      const estado = document.getElementById('estadoCita').value;
+
+      const tabla = document.getElementById('tablaCitas').getElementsByTagName('tbody')[0];
+
+      if (accionActual === 'agendar') {
+        const nuevaFila = tabla.insertRow();
+        nuevaFila.innerHTML = `<td>${id}</td><td>${nombre}</td><td>${fecha}</td><td>${hora}</td><td>${servicio}</td><td>${estado}</td>`;
+      } else if (accionActual === 'cambiar') {
+        for (let fila of tabla.rows) {
+          if (fila.cells[0].innerText === id) {
+            fila.cells[1].innerText = nombre;
+            fila.cells[2].innerText = fecha;
+            fila.cells[3].innerText = hora;
+            fila.cells[4].innerText = servicio;
+            fila.cells[5].innerText = estado;
+            break;
+          }
+        }
+      } else if (accionActual === 'cancelar') {
+        for (let fila of tabla.rows) {
+          if (fila.cells[0].innerText === id) {
+            fila.cells[5].innerText = 'Cancelada';
+            break;
+          }
+        }
+      }
+
+      document.getElementById('formulario').style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>

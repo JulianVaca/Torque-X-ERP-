@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contabilidad - Torque X</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      background-image: url('imagenes/R1.jpg');
+      background-size: 1250px 600px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background-color: #347df2;
+      color: white;
+      padding: 15px 0;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+    nav ul li {
+      display: inline;
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    main {
+      padding: 20px;
+    }
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: white;
+      font-size: 18px;
+    }
+    th, td {
+      padding: 15px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #347df2;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    .resumen {
+      margin: 30px;
+      font-size: 20px;
+      color: white;
+    }
+    .resumen p {
+      color: white;
+    }
+    form {
+      margin: 30px;
+      background: rgba(255,255,255,0.9);
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+    input[type="text"], input[type="number"] {
+      padding: 10px;
+      margin: 10px;
+      width: 250px;
+      font-size: 16px;
+    }
+    input[type="submit"] {
+      background-color: #347df2;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Torque X - Sistema de Gestión</h1>
+    <nav>
+      <ul>
+        <li><a href="ventas.html">Ventas</a></li>
+        <li><a href="inventario.html">Inventario</a></li>
+        <li><a href="clientes.html">Clientes</a></li>
+        <li><a href="reportes.html">Reportes</a></li>
+        <li><a href="citas.html">Citas</a></li>
+        <li><a href="recursosHumanos.html">Recursos Humanos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Contabilidad General</h2>
+
+    <table id="ventasTabla">
+      <thead>
+        <tr>
+          <th>ID Venta</th>
+          <th>Cliente</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Producto</th>
+          <th>Monto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>C201</td><td>Juan Pérez</td><td>juan@example.com</td><td>123-456-789</td><td>Yamaha YZF-R1</td><td>59000</td></tr>
+        <tr><td>C202</td><td>María Gómez</td><td>maria@example.com</td><td>987-654-321</td><td>Honda CBR1000RR</td><td>58000</td></tr>
+        <tr><td>C203</td><td>Pedro Sánchez</td><td>pedro@example.com</td><td>111-222-333</td><td>Kawasaki Ninja ZX-10R</td><td>60000</td></tr>
+        <tr><td>C204</td><td>Laura Rodríguez</td><td>laura@example.com</td><td>444-555-666</td><td>Ducati Panigale V4</td><td>62000</td></tr>
+        <tr><td>C205</td><td>Carlos Fernández</td><td>carlos@example.com</td><td>777-888-999</td><td>BMW S1000RR</td><td>61000</td></tr>
+        <tr><td>C206</td><td>Ana Martínez</td><td>ana@example.com</td><td>123-321-123</td><td>Suzuki GSX-R1000</td><td>57000</td></tr>
+        <tr><td>C207</td><td>Roberto Díaz</td><td>roberto@example.com</td><td>456-654-456</td><td>Aprilia RSV4</td><td>58000</td></tr>
+        <tr><td>C208</td><td>Gabriela López</td><td>gabriela@example.com</td><td>789-987-789</td><td>Suzuki GSX-R1000</td><td>57000</td></tr>
+        <tr><td>C209</td><td>Esteban Torres</td><td>esteban@example.com</td><td>159-357-951</td><td>Honda CBR1000RR</td><td>58000</td></tr>
+        <tr><td>C210</td><td>Patricia Ramírez</td><td>patricia@example.com</td><td>852-741-963</td><td>Yamaha MT-09</td><td>58000</td></tr>
+      </tbody>
+    </table>
+
+    <section class="resumen">
+      <h3>Resumen Financiero</h3>
+      <p id="ingresos">Total Ingresos por Ventas: $591000.00</p>
+      <p id="gastos">Total Gastos Registrados: $0.00</p>
+      <p id="balance">Balance Final: $591000.00</p>
+    </section>
+
+    <h2>Registrar Nuevo Gasto</h2>
+    <form id="gastoForm">
+      <input type="text" id="descripcionGasto" placeholder="Descripción del Gasto" required>
+      <input type="number" id="montoGasto" placeholder="Monto del Gasto" required>
+      <input type="submit" value="Agregar Gasto">
+    </form>
+
+    <table id="gastosTabla">
+      <thead>
+        <tr>
+          <th>Descripción</th>
+          <th>Monto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Nuevos gastos aparecerán aquí -->
+      </tbody>
+    </table>
+  </main>
+
+  <script>
+    let totalIngresos = 591000;
+    let totalGastos = 0;
+
+    function actualizarResumen() {
+      document.getElementById('ingresos').innerText = `Total Ingresos por Ventas: $${totalIngresos.toFixed(2)}`;
+      document.getElementById('gastos').innerText = `Total Gastos Registrados: $${totalGastos.toFixed(2)}`;
+      document.getElementById('balance').innerText = `Balance Final: $${(totalIngresos - totalGastos).toFixed(2)}`;
+    }
+
+    document.getElementById('gastoForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const descripcion = document.getElementById('descripcionGasto').value;
+      const monto = parseFloat(document.getElementById('montoGasto').value);
+
+      if (descripcion && !isNaN(monto)) {
+        const tabla = document.getElementById('gastosTabla').getElementsByTagName('tbody')[0];
+        const nuevaFila = tabla.insertRow();
+
+        const celdaDescripcion = nuevaFila.insertCell(0);
+        const celdaMonto = nuevaFila.insertCell(1);
+
+        celdaDescripcion.textContent = descripcion;
+        celdaMonto.textContent = `$${monto.toFixed(2)}`;
+
+        totalGastos += monto;
+        actualizarResumen();
+
+        document.getElementById('gastoForm').reset();
+      }
+    });
+  </script>
+</body>
+</html>

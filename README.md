@@ -53,7 +53,7 @@ Se han ejecutado múltiples pruebas centradas en validar el flujo de autenticaci
 ## 📦 Instalación local
 
 ```bash
-git clone https://github.com/JulianVaca/torque-x-ERP.git
+git clone https://github.com/JulianVaca/torque-x-ERP-.git
 cd torque-x
 npm install
 npm run dev

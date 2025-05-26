@@ -1,0 +1,19 @@
+Área,Responsable,Fecha Inicio,Fecha Fin,Duración (días)
+Validación de inicio de sesión seguro,Camila Correa,2025-05-05,2025-05-06,2
+Automatización de pruebas funcionales críticas,Nicolás Ramírez,2025-05-07,2025-05-09,3
+Optimización de arquitectura BFF,Felipe Arenas,2025-05-05,2025-05-10,6
+Mejoras en experiencia de usuario (UI/UX),Julián Vaca,2025-05-08,2025-05-10,3
+Gestión de roles y permisos en usuarios,Camila Correa,2025-05-11,2025-05-12,2
+Configuración de pruebas automatizadas (PHPUnit/Selenium),Nicolás Ramírez,2025-05-07,2025-05-09,3
+Documentación de decisiones arquitectónicas,Felipe Arenas,2025-05-13,2025-05-14,2
+Refactorización de módulos heredados (PHP sin framework),Julián Vaca,2025-05-11,2025-05-13,3
+Mejoras en validaciones visuales de formularios,Camila Correa,2025-05-14,2025-05-15,2
+Carga final al repositorio y cierre técnico,Julián Vaca,2025-05-15,2025-05-15,1
+Implementación de cache para mejora de rendimiento,Felipe Arenas,2025-05-06,2025-05-08,3
+Pruebas de rendimiento en escenarios móviles,Nicolás Ramírez,2025-05-09,2025-05-10,2
+Optimización de consultas SQL en módulos ERP,Julián Vaca,2025-05-06,2025-05-08,3
+Diseño y revisión de flujos de usuario,Camila Correa,2025-05-10,2025-05-11,2
+Configuración de base de datos replicada y balanceadores,Felipe Arenas,2025-05-12,2025-05-14,3
+Integración de RabbitMQ para tareas asíncronas,Nicolás Ramírez,2025-05-12,2025-05-13,2
+Evaluación de atributos de calidad: rendimiento y escalabilidad,Felipe Arenas,2025-05-14,2025-05-15,2
+Pruebas de regresión en funcionalidades existentes,Julián Vaca,2025-05-13,2025-05-14,2

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Pago de Cita</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e8f0fe;
+      padding: 20px;
+    }
+
+    .pago-container {
+      background: #fff;
+      max-width: 600px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 15px 30px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="pago-container">
+    <h2>Resumen de Pago</h2>
+    <p><strong>Nombre:</strong> <span id="nombre"></span></p>
+    <p><strong>Correo:</strong> <span id="correo"></span></p>
+    <p><strong>Fecha de la cita:</strong> <span id="fecha"></span></p>
+    <p><strong>Modelo de la Moto:</strong> <span id="moto"></span></p>
+    <p><strong>Valor de la cita (5% del valor de la moto):</strong> $<span id="valorCita"></span></p>
+
+    <button onclick="generarPDF()">Descargar Comprobante (PDF)</button>
+  </div>
+
+  <script>
+    const cita = JSON.parse(localStorage.getItem("citaConfirmada"));
+
+    if (cita) {
+      document.getElementById("nombre").innerText = cita.nombre || "No especificado";
+      document.getElementById("correo").innerText = cita.correo || "No especificado";
+      document.getElementById("fecha").innerText = cita.fecha || "No especificado";
+      document.getElementById("moto").innerText = cita.moto || "No especificado";
+
+      // Calcula el valor de la cita como 5% del valor de la moto
+      const valorMoto = parseFloat(cita.motoValor || 0);
+      const valorCita = valorMoto * 0.05;
+      document.getElementById("valorCita").innerText = valorCita.toLocaleString("es-CO");
+    } else {
+      alert("No hay datos de cita. Redirigiendo...");
+      window.location.href = "index.html";
+    }
+
+    async function generarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const valorMoto = parseFloat(cita.motoValor || 0);
+      const valorCita = valorMoto * 0.05;
+      const valorCitaFormateado = valorCita.toLocaleString("es-CO");
+
+      doc.setFontSize(16);
+      doc.text("Comprobante de Pago - Cita para Moto", 20, 20);
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${cita.nombre}`, 20, 40);
+      doc.text(`Correo: ${cita.correo}`, 20, 50);
+      doc.text(`Fecha: ${cita.fecha}`, 20, 60);
+      doc.text(`Modelo de la Moto: ${cita.moto}`, 20, 70);
+      doc.text(`Valor de la cita (5%): $${valorCitaFormateado}`, 20, 80);
+      doc.text("Gracias por su pago.", 20, 100);
+
+      doc.save("comprobante_pago.pdf");
+
+      alert(`Comprobante generado. (Simulado: Enviado a ${cita.correo})`);
+    }
+  </script>
+
+</body>
+</html>
+

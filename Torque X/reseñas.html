@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reseñas de Motos</title>
+  <link rel="stylesheet" href="ErpStyles.css">
+  <style>
+    .moto-card {
+      border: 1px solid #300000;
+      margin: 15px;
+      padding: 20px;
+      display: inline-block;
+      width: 200px;
+      text-align: center;
+    }
+    .moto-card img {
+      width: 100%;
+      height: auto;
+    }
+    .moto-card h3, .moto-card p {
+      margin: 10px 0;
+    }
+    .resena {
+      margin-top: 15px;
+      text-align: left;
+    }
+    .stars {
+      color: gold;
+    }
+    /* Estilos del botón */
+    .btn-volver {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    .btn-volver:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Reseñas de Motos</h1>
+
+  <div id="moto-list"></div>
+
+  <h2>Agregar Reseña</h2>
+  <form id="resena-form">
+    <label for="moto-select">Selecciona una moto:</label>
+    <select id="moto-select">
+      <!-- Las opciones se llenarán con las motos dinámicamente -->
+    </select><br>
+
+    <label for="comentario">Comentario:</label><br>
+    <textarea id="comentario" rows="4" cols="50"></textarea><br>
+
+    <label for="estrellas">Estrellas:</label><br>
+    <input type="number" id="estrellas" min="1" max="5" step="1" required><br>
+
+    <button type="submit">Enviar Reseña</button>
+  </form>
+
+  <!-- Botón para volver a la página principal -->
+  <a href="PaginaPrincipila.html" class="btn-volver">Volver a la Página Principal</a>
+
+  <script>
+    const motos = [
+      {codigo: 'V101', modelo: 'Yamaha YZF-R1', marca: 'Yamaha', imagen: 'imagenes/R1 yzh.jpg', precio: 66000000, stock: 11, reseñas: [
+        {comentario: 'Excelente moto para circuitos, mucho control y velocidad.', estrellas: 5},
+        {comentario: 'Gran rendimiento, aunque el precio es algo elevado.', estrellas: 4}
+      ]},
+      {codigo: 'V102', modelo: 'Kawasaki Ninja ZX-10R', marca: 'Kawasaki', imagen: 'imagenes/kawasaki zx-10R.jpg', precio: 115000000, stock: 5, reseñas: [
+        {comentario: 'Un monstruo en la pista, potencia impresionante.', estrellas: 5},
+        {comentario: 'A veces siento que la moto es demasiado agresiva para principiantes.', estrellas: 3}
+      ]},
+      {codigo: 'V103', modelo: 'Honda CBR1000RR', marca: 'Honda', imagen: 'imagenes/CBR 1000.jpg', precio: 60000000, stock: 10, reseñas: [
+        {comentario: 'Muy equilibrada, ideal para cualquier tipo de conducción.', estrellas: 5},
+        {comentario: 'Buen rendimiento, pero me gustaría que tuviera más torque.', estrellas: 4}
+      ]},
+      {codigo: 'V104', modelo: 'Ducati Panigale V4', marca: 'Ducati', imagen: 'imagenes/2023-ducati-panigale-v4---front-right.jpg', precio: 142000000, stock: 2, reseñas: [
+        {comentario: 'La moto más hermosa que he tenido, y con un rendimiento espectacular.', estrellas: 5},
+        {comentario: 'Es cara, pero vale cada centavo. El sonido del motor es increíble.', estrellas: 5}
+      ]},
+      {codigo: 'V105', modelo: 'BMW S1000RR', marca: 'BMW', imagen: 'imagenes/S1000rr.jpg', precio: 90000000, stock: 10, reseñas: [
+        {comentario: 'La moto ideal para los amantes de la velocidad y la tecnología.', estrellas: 5},
+        {comentario: 'Muy rápida, pero el confort no es el mejor.', estrellas: 4}
+      ]},
+      {codigo: 'V106', modelo: 'Suzuki GSX-R1000', marca: 'Suzuki', imagen: 'imagenes/2018-Suzuki-GSXR1000-GSXR1000R-MotoGP-replica_2.jpg', precio: 104000000, stock: 7, reseñas: [
+        {comentario: 'Increíble moto, ligera y fácil de manejar en curvas.', estrellas: 5},
+        {comentario: 'Buen rendimiento, aunque la suspensión podría mejorar.', estrellas: 4}
+      ]},
+      {codigo: 'V107', modelo: 'Yamaha MT-09', marca: 'Yamaha', imagen: 'imagenes/MT09.jpg', precio: 60000000, stock: 20, reseñas: [
+        {comentario: 'La mejor moto para ciudad, manejabilidad increíble.', estrellas: 5},
+        {comentario: 'Buena moto, pero el consumo de combustible es alto.', estrellas: 3}
+      ]}
+    ];
+
+    // Mostrar las motos en la página
+    const motoList = document.getElementById('moto-list');
+    const motoSelect = document.getElementById('moto-select');
+
+    motos.forEach(moto => {
+      const motoCard = document.createElement('div');
+      motoCard.classList.add('moto-card');
+      let reseñasHTML = '';
+      
+      moto.reseñas.forEach(resena => {
+        reseñasHTML += ` 
+          <p><strong>Comentario:</strong> ${resena.comentario}</p>
+          <p><strong>Estrellas:</strong> <span class="stars">${'★'.repeat(resena.estrellas)}${'☆'.repeat(5 - resena.estrellas)}</span></p>
+        `;
+      });
+
+      motoCard.innerHTML = `
+        <img src="${moto.imagen}" alt="${moto.modelo}">
+        <h3>${moto.modelo}</h3>
+        <p>Marca: ${moto.marca}</p>
+        <p>Precio: $${moto.precio.toLocaleString()}</p>
+        <p>Stock: ${moto.stock}</p>
+        <div class="resena">
+          <h4>Reseñas:</h4>
+          ${reseñasHTML}
+        </div>
+      `;
+      motoList.appendChild(motoCard);
+
+      const option = document.createElement('option');
+      option.value = moto.codigo;
+      option.textContent = moto.modelo;
+      motoSelect.appendChild(option);
+    });
+
+    // Manejar la creación de nuevas reseñas
+    document.getElementById('resena-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const motoCodigo = document.getElementById('moto-select').value;
+      const comentario = document.getElementById('comentario').value;
+      const estrellas = document.getElementById('estrellas').value;
+
+      const moto = motos.find(m => m.codigo === motoCodigo);
+      if (moto) {
+        // Agregar la nueva reseña a la moto en el array
+        moto.reseñas.push({comentario: comentario, estrellas: parseInt(estrellas)});
+
+        // Actualizar las reseñas de la moto en la interfaz
+        const motoCards = document.querySelectorAll('.moto-card');
+        motoCards.forEach(card => {
+          const modelo = card.querySelector('h3').textContent;
+          if (modelo === moto.modelo) {
+            let reseñasHTML = '';
+            moto.reseñas.forEach(resena => {
+              reseñasHTML += `
+                <p><strong>Comentario:</strong> ${resena.comentario}</p>
+                <p><strong>Estrellas:</strong> <span class="stars">${'★'.repeat(resena.estrellas)}${'☆'.repeat(5 - resena.estrellas)}</span></p>
+              `;
+            });
+            card.querySelector('.resena').innerHTML = `<h4>Reseñas:</h4>${reseñasHTML}`;
+          }
+        });
+      }
+
+      // Limpiar el formulario
+      document.getElementById('comentario').value = '';
+      document.getElementById('estrellas').value = '';
+    });
+  </script>
+</body>
+</html>

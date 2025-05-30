@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catálogo de Motos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #216085bb;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      color: white;
+    }
+
+    .filtros {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filtros input {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: none;
+      width: 200px;
+    }
+
+    .catalogo {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .producto {
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .producto:hover {
+      transform: scale(1.05);
+    }
+
+    .producto img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .producto h3 {
+      margin: 10px 0 5px;
+      font-size: 1.2rem;
+    }
+
+    .producto p {
+      margin: 5px 0;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    .producto button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .producto button:hover {
+      background-color: #0056b3;
+    }
+
+    .cart-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #007bff;
+      padding: 15px;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease;
+    }
+
+    .cart-icon:hover {
+      background-color: #0056b3;
+    }
+
+    .cart-icon img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .volver-principal, .ir-carrito {
+      position: absolute;
+      top: 20px;
+      background-color: #007bff;
+      padding: 10px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      color: white;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .volver-principal {
+      right: 160px;
+    }
+
+    .ir-carrito {
+      right: 20px;
+    }
+
+    .volver-principal:hover,
+    .ir-carrito:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Catálogo de Motos</h1>
+
+  <!-- Botones -->
+  <a href="PaginaPrincipila.html" class="volver-principal">Volver a la Página Principal</a>
+  <a href="carrito.html" class="ir-carrito">Ir al Carrito</a>
+
+  <!-- Filtros -->
+  <div class="filtros">
+    <input type="text" id="buscar" placeholder="Buscar modelo o marca..." />
+    <input type="number" id="minPrecio" placeholder="Precio mínimo" />
+    <input type="number" id="maxPrecio" placeholder="Precio máximo" />
+  </div>
+
+  <!-- Catálogo de Motos -->
+  <div class="catalogo" id="catalogo"></div>
+
+  <!-- Ícono flotante del carrito -->
+  <a href="carrito.html" class="cart-icon">
+    <img src="imagenes/CarritoC.jpg" alt="carrito de compras" />
+  </a>
+
+  <script>
+    const motos = [
+      {
+        codigo: 'V101',
+        modelo: 'Yamaha YZF-R1',
+        marca: 'Yamaha',
+        imagen: 'imagenes/R1 yzh.jpg',
+        precio: 66000000,
+        stock: 11,
+        caracteristicas: '998cc, 200 hp, electrónica avanzada'
+      },
+      {
+        codigo: 'V102',
+        modelo: 'Kawasaki Ninja ZX-10R',
+        marca: 'Kawasaki',
+        imagen: 'imagenes/kawasaki zx-10R.jpg',
+        precio: 115000000,
+        stock: 5,
+        caracteristicas: '998cc, 203 hp, control de tracción'
+      },
+      {
+        codigo: 'V103',
+        modelo: 'Honda CBR1000RR',
+        marca: 'Honda',
+        imagen: 'imagenes/CBR 1000.jpg',
+        precio: 60000000,
+        stock: 10,
+        caracteristicas: '999cc, 189 hp, ABS'
+      },
+      {
+        codigo: 'V104',
+        modelo: 'Ducati Panigale V4',
+        marca: 'Ducati',
+        imagen: 'imagenes/2023-ducati-panigale-v4---front-right.jpg',
+        precio: 142000000,
+        stock: 2,
+        caracteristicas: '1103cc, 214 hp, sistema de enfriamiento avanzado'
+      },
+      {
+        codigo: 'V105',
+        modelo: 'BMW S1000RR',
+        marca: 'BMW',
+        imagen: 'imagenes/S1000rr.jpg',
+        precio: 90000000,
+        stock: 10,
+        caracteristicas: '999cc, 205 hp, suspensión electrónica'
+      },
+      {
+        codigo: 'V106',
+        modelo: 'Suzuki GSX-R1000',
+        marca: 'Suzuki',
+        imagen: 'imagenes/2018-Suzuki-GSXR1000-GSXR1000R-MotoGP-replica_2.jpg',
+        precio: 104000000,
+        stock: 7,
+        caracteristicas: '999cc, 199 hp, sistema de escape deportivo'
+      },
+      {
+        codigo: 'V107',
+        modelo: 'Yamaha MT-09',
+        marca: 'Yamaha',
+        imagen: 'imagenes/MT09.jpg',
+        precio: 60000000,
+        stock: 20,
+        caracteristicas: '847cc, 115 hp, diseño naked'
+      }
+    ];
+
+    const catalogo = document.getElementById("catalogo");
+    const inputBusqueda = document.getElementById("buscar");
+    const inputMin = document.getElementById("minPrecio");
+    const inputMax = document.getElementById("maxPrecio");
+
+    function mostrarMotos(lista) {
+      catalogo.innerHTML = "";
+      if (lista.length === 0) {
+        catalogo.innerHTML = "<p style='color:white;'>No se encontraron motos.</p>";
+        return;
+      }
+      lista.forEach(moto => {
+        const div = document.createElement("div");
+        div.className = "producto";
+        div.innerHTML = `
+          <img src="${moto.imagen}" alt="${moto.modelo}">
+          <h3>${moto.modelo}</h3>
+          <p>Marca: ${moto.marca}</p>
+          <p>Características: ${moto.caracteristicas}</p>
+          <p>Precio: $${moto.precio.toLocaleString()}</p>
+          <button class="agregar-carrito" data-codigo="${moto.codigo}">Agregar al carrito</button>
+        `;
+        catalogo.appendChild(div);
+      });
+
+      document.querySelectorAll(".agregar-carrito").forEach(button => {
+        button.addEventListener("click", e => {
+          const codigo = e.target.getAttribute("data-codigo");
+          agregarAlCarrito(codigo);
+        });
+      });
+    }
+
+    function filtrarMotos() {
+      const busqueda = inputBusqueda.value.toLowerCase();
+      const minStr = inputMin.value.trim();
+      const maxStr = inputMax.value.trim();
+
+      const min = minStr === "" ? 0 : parseInt(minStr);
+      const max = maxStr === "" ? Infinity : parseInt(maxStr);
+
+      const resultado = motos.filter(m => {
+        const coincideTexto =
+          m.modelo.toLowerCase().includes(busqueda) ||
+          m.marca.toLowerCase().includes(busqueda);
+        const coincidePrecio = m.precio >= min && m.precio <= max;
+        return coincideTexto && coincidePrecio;
+      });
+
+      mostrarMotos(resultado);
+    }
+
+    function agregarAlCarrito(codigo) {
+      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      const moto = motos.find(m => m.codigo === codigo);
+      if (moto) {
+        carrito.push(moto);
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        alert(`${moto.modelo} ha sido agregado al carrito`);
+      }
+    }
+
+    // Eventos
+    inputBusqueda.addEventListener("input", filtrarMotos);
+    inputMin.addEventListener("input", filtrarMotos);
+    inputMax.addEventListener("input", filtrarMotos);
+
+    mostrarMotos(motos); // mostrar todas al cargar
+  </script>
+</body>
+</html>
+

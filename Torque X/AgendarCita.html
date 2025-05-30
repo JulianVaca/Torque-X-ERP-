@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agendar Cita</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <form id="form-cita">
+    <h2>Agendar Cita con el Concesionario</h2>
+
+    <label for="modelo">Modelo de Moto</label>
+    <input type="text" id="modelo" name="modelo" readonly />
+
+    <label for="precio">Precio de la Moto</label>
+    <input type="text" id="precio" name="precio" readonly />
+
+    <label for="valorCita">Valor de la Cita (5% del valor de la moto)</label>
+    <input type="text" id="valorCita" name="valorCita" readonly />
+
+    <label for="nombre">Nombre completo</label>
+    <input type="text" id="nombre" name="nombre" required />
+
+    <label for="cedula">Cédula</label>
+    <input type="text" id="cedula" name="cedula" required />
+
+    <label for="lugar">Lugar del concesionario</label>
+    <select id="lugar" name="lugar" required>
+      <option value="">Selecciona un lugar</option>
+      <option value="Bogotá">Bogotá</option>
+      <option value="Medellín">Medellín</option>
+      <option value="Cali">Cali</option>
+      <option value="Barranquilla">Barranquilla</option>
+    </select>
+
+    <label for="fecha">Fecha</label>
+    <input type="date" id="fecha" name="fecha" required />
+
+    <label for="hora">Hora</label>
+    <input type="time" id="hora" name="hora" required />
+
+    <button type="submit">Confirmar Cita</button>
+  </form>
+
+  <script>
+    // Obtener el parámetro de la URL
+    const params = new URLSearchParams(window.location.search);
+    const codigo = params.get('codigo');
+
+    // Array de motos
+    const motos = [
+      {codigo: 'V101', modelo: 'Yamaha YZF-R1', precio: 66000000},
+      {codigo: 'V102', modelo: 'Kawasaki Ninja ZX-10R', precio: 115000000},
+      {codigo: 'V103', modelo: 'Honda CBR1000RR', precio: 60000000},
+      {codigo: 'V104', modelo: 'Ducati Panigale V4', precio: 142000000},
+      {codigo: 'V105', modelo: 'BMW S1000RR', precio: 90000000},
+      {codigo: 'V106', modelo: 'Suzuki GSX-R1000', precio: 104000000},
+      {codigo: 'V107', modelo: 'Yamaha MT-09', precio: 60000000}
+    ];
+
+    const motoSeleccionada = motos.find(m => m.codigo === codigo);
+    if (motoSeleccionada) {
+      document.getElementById('modelo').value = motoSeleccionada.modelo;
+      document.getElementById('precio').value = `$${motoSeleccionada.precio.toLocaleString()}`;
+      const valorCita = (motoSeleccionada.precio * 0.05).toLocaleString();
+      document.getElementById('valorCita').value = `$${valorCita}`;
+    }
+
+    // Manejo del envío del formulario
+    document.getElementById('form-cita').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const cita = {
+        modelo: document.getElementById('modelo').value,
+        precio: document.getElementById('precio').value,
+        valorCita: document.getElementById('valorCita').value,
+        nombre: document.getElementById('nombre').value,
+        cedula: document.getElementById('cedula').value,
+        lugar: document.getElementById('lugar').value,
+        fecha: document.getElementById('fecha').value,
+        hora: document.getElementById('hora').value
+      };
+
+      localStorage.setItem("citaConfirmada", JSON.stringify(cita));
+      window.location.href = "confirmarCita.html";
+    });
+  </script>
+</body>
+</html>

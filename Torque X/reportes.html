@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reportes - Torque X</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            background-image: url('imagenes/R1.jpg');
+            background-size: 1250px 600px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #347df2;
+            color: white;
+            padding: 15px 0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        main {
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto 60px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 30px;
+            text-align: left;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        form label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+            color: #333;
+        }
+        form input[type="text"],
+        form input[type="date"],
+        form input[type="number"] {
+            width: 100%;
+            padding: 8px 10px;
+            margin-top: 4px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        form button {
+            margin-top: 18px;
+            background-color: #347df2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        form button:hover {
+            background-color: #2a62b9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #347df2;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Torque X - Sistema de Gestión</h1>
+        <nav>
+            <ul>
+        <li><a href="inventario.html" id="inventario">Inventario</a></li>
+            <li><a href="ventas.html" id="ventas">Ventas</a></li>
+            <li><a href="clientes.html" id="clientes">Clientes</a></li>
+            <li><a href="proveedores.html" id="proveedores">Proveedores</a></li>
+            <li><a href="reportes.html" id="reportes">Reportes</a></li>
+              <li><a href="Contabilida.html" id="reportes">Contabilidad</a></li>
+                <li><a href="RecursosHumanos.html" id="reportes">Recursos Humanos</a></li>
+                  <li><a href="facturacion.html" id="reportes">Facturacion</a></li>
+                    <li><a href="empleados.html" id="reportes">Empleados</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Generar Nuevo Reporte</h2>
+        <form id="reportForm">
+            <label for="idReporte">ID Reporte</label>
+            <input type="text" id="idReporte" name="idReporte" placeholder="Ej: R406" required />
+
+            <label for="descripcion">Descripción</label>
+            <input type="text" id="descripcion" name="descripcion" placeholder="Ej: Reporte de Ventas Abril" required />
+
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha" name="fecha" required />
+
+            <label for="ventasTotales">Ventas Totales</label>
+            <input type="text" id="ventasTotales" name="ventasTotales" placeholder="Ej: $50,000 o -" />
+
+            <button type="submit">Agregar Reporte</button>
+        </form>
+
+        <h2>Historial de Reportes</h2>
+        <table id="reportesTable">
+            <thead>
+                <tr>
+                    <th>ID Reporte</th>
+                    <th>Descripción</th>
+                    <th>Fecha</th>
+                    <th>Ventas Totales</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>R401</td><td>Reporte de Ventas Marzo</td><td>2025-03-01</td><td>$42,500</td></tr>
+                <tr><td>R402</td><td>Reporte de Stock Actualizado</td><td>2025-03-10</td><td>-</td></tr>
+                <tr><td>R403</td><td>Reporte de Ingresos Mensuales</td><td>2025-03-15</td><td>$75,200</td></tr>
+                <tr><td>R404</td><td>Reporte de Gastos Operativos</td><td>2025-03-20</td><td>$18,600</td></tr>
+                <tr><td>R405</td><td>Reporte de Clientes Nuevos</td><td>2025-03-25</td><td>5</td></tr>
+            </tbody>
+        </table>
+    </main>
+
+    <script>
+        // Manejar formulario para agregar filas dinámicamente a la tabla
+        document.getElementById('reportForm').addEventListener('submit', function(event){
+            event.preventDefault();
+
+            // Obtener valores del formulario
+            const id = document.getElementById('idReporte').value.trim();
+            const desc = document.getElementById('descripcion').value.trim();
+            const fecha = document.getElementById('fecha').value;
+            const ventas = document.getElementById('ventasTotales').value.trim() || '-';
+
+            // Validar que campos obligatorios tengan datos (ya con required en HTML)
+            if (!id || !desc || !fecha) {
+                alert('Por favor, completa todos los campos requeridos.');
+                return;
+            }
+
+            // Formatear fecha a dd/mm/yyyy para mostrar
+            const fechaObj = new Date(fecha);
+            const fechaFormateada = fechaObj.toLocaleDateString('es-ES');
+
+            // Crear nueva fila en la tabla
+            const tabla = document.getElementById('reportesTable').getElementsByTagName('tbody')[0];
+            const nuevaFila = tabla.insertRow();
+
+            const celdaId = nuevaFila.insertCell(0);
+            celdaId.textContent = id;
+
+            const celdaDesc = nuevaFila.insertCell(1);
+            celdaDesc.textContent = desc;
+
+            const celdaFecha = nuevaFila.insertCell(2);
+            celdaFecha.textContent = fechaFormateada;
+
+            const celdaVentas = nuevaFila.insertCell(3);
+            celdaVentas.textContent = ventas;
+
+            // Limpiar formulario
+            this.reset();
+        });
+    </script>
+</body>
+</html>

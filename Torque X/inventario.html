@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas - Torque X</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            background-image: url('imagenes/R1.jpg');
+            background-size: 1250px 600px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #347df2;
+            color: white;
+            padding: 15px 0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        main {
+            padding: 20px;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: white;
+            font-size: 18px;
+        }
+        th, td {
+            padding: 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #347df2;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        img {
+            width: 100px;
+            height: auto;
+        }
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Torque X - Modulo de Inventario</h1>
+        <nav>
+            <ul>
+                <!--<li><a href="index.html">Inicio</a></li>-->
+        <li><a href="inventario.html" id="inventario">Inventario</a></li>
+            <li><a href="ventas.html" id="ventas">Ventas</a></li>
+            <li><a href="clientes.html" id="clientes">Clientes</a></li>
+            <li><a href="proveedores.html" id="proveedores">Proveedores</a></li>
+            <li><a href="reportes.html" id="reportes">Reportes</a></li>
+              <li><a href="Contabilida.html" id="reportes">Contabilidad</a></li>
+                <li><a href="RecursosHumanos.html" id="reportes">Recursos Humanos</a></li>
+                  <li><a href="facturacion.html" id="reportes">Facturacion</a></li>
+                    <li><a href="empleados.html" id="reportes">Empleados</a></li>
+        </nav>
+    </header>
+    
+    <main>
+        <h2> Motos Deportivas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Moto</th>
+                    <th>Modelo</th>
+                    <th>Imagen</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                    <th>Stock Disponible</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>V101</td>
+                    <td>Yamaha YZF-R1</td>
+                    <td><img src="imagenes/R1 yzh.jpg" alt="Yamaha YZF-R1"></td>
+                    <td>1</td>
+                    <td>$66.000.000</td>
+                    <td><input type="number" value="11" min="0"></td>
+                </tr>
+                <tr>
+                    <td>V102</td>
+                    <td>Kawasaki Ninja ZX-10R</td>
+                    <td><img src="imagenes/kawasaki zx-10R.jpg" alt="Kawasaki Ninja ZX-10R"></td>
+                    <td>1</td>
+                    <td>$115.000.000</td>
+                    <td><input type="number" value="5" min="0"></td>
+                </tr>
+                <tr>
+                    <td>V103</td>
+                    <td>Honda CBR1000RR</td>
+                    <td><img src="imagenes/CBR 1000.jpg" alt="Honda CBR1000RR"></td>
+                    <td>1</td>
+                    <td>$60.000.000</td>
+                    <td><input type="number" value="10" min="0"></td>
+                </tr>
+                <tr>
+                    <td>V104</td>
+                    <td>Ducati Panigale V4</td>
+                    <td><img src="imagenes/2023-ducati-panigale-v4---front-right.jpg" alt="Honda Ducati Panigale V4"></td>
+                    <td>1</td>
+                    <td>$142.000.000</td>
+                    <td><input type="number" value="2" min="0"></td>
+                </tr>
+                <tr>
+                    <td>V105</td>
+                    <td>BMW S1000RR</td>
+                    <td><img src="imagenes/S1000rr.jpg" alt="BMW S1000rr"></td>
+                    <td>1</td>
+                    <td>$90.000.000</td>
+                    <td><input type="number" value="10" min="0"></td>
+                </tr>
+                <tr>
+                    <td>V106</td>
+                    <td>Suzuki GSX-R1000</td>
+                    <td><img src="imagenes/2018-Suzuki-GSXR1000-GSXR1000R-MotoGP-replica_2.jpg" alt="Suzuki GSX-R1000"></td>
+                    <td>1</td>
+                    <td>$104.000.000</td>
+                    <td><input type="number" value="7" min="0"></td>
+                </tr>
+                <tr>
+                    <td>V107</td>
+                    <td>Yamaha MT-09</td>
+                    <td><img src="imagenes/MT09.jpg" alt="Yamaha MT-09"></td>
+                    <td>1</td>
+                    <td>$60.000.000</td>
+                    <td><input type="number" value="20" min="0"></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

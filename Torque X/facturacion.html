@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión de Facturas</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      margin: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    form, table {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    form button {
+      background-color: #28a745;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    table {
+      margin-top: 40px;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    .acciones button {
+      margin: 2px;
+      padding: 6px 12px;
+      font-size: 14px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .ver { background-color: #007bff; color: white; border: none; }
+    .descargar { background-color: #6f42c1; color: white; border: none; }
+  </style>
+</head>
+<body>
+
+  <h2>Crear Nueva Factura</h2>
+  <form id="formFactura">
+    <input type="text" placeholder="Nombre del cliente" id="nombre" required>
+    <input type="email" placeholder="Correo electrónico" id="correo" required>
+    <input type="text" placeholder="Modelo de la moto" id="moto" required>
+    <input type="number" placeholder="Valor de la moto" id="valorMoto" required>
+    <input type="date" id="fecha" required>
+    <textarea placeholder="Descripción del servicio" id="descripcion" required></textarea>
+    <button type="submit">Crear Factura</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>N° Factura</th>
+        <th>Cliente</th>
+        <th>Fecha</th>
+        <th>Total</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tablaFacturas"></tbody>
+  </table>
+
+  <script>
+    let facturas = JSON.parse(localStorage.getItem("facturas")) || [];
+
+    const tablaFacturas = document.getElementById("tablaFacturas");
+
+    function renderizarFacturas() {
+      tablaFacturas.innerHTML = "";
+      facturas.forEach((factura, index) => {
+        const fila = `
+          <tr>
+            <td>${factura.numero}</td>
+            <td>${factura.nombre}</td>
+            <td>${factura.fecha}</td>
+            <td>$${factura.total.toLocaleString("es-CO")}</td>
+            <td class="acciones">
+              <button class="ver" onclick="verFactura(${index})">Ver</button>
+              <button class="descargar" onclick="descargarFactura(${index})">Descargar</button>
+            </td>
+          </tr>
+        `;
+        tablaFacturas.innerHTML += fila;
+      });
+    }
+
+    function generarNumeroFactura() {
+      return "FAC-" + (Math.floor(Math.random() * 90000) + 10000);
+    }
+
+    document.getElementById("formFactura").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const nuevaFactura = {
+        numero: generarNumeroFactura(),
+        nombre: document.getElementById("nombre").value,
+        correo: document.getElementById("correo").value,
+        moto: document.getElementById("moto").value,
+        valorMoto: parseFloat(document.getElementById("valorMoto").value),
+        fecha: document.getElementById("fecha").value,
+        descripcion: document.getElementById("descripcion").value,
+        total: parseFloat(document.getElementById("valorMoto").value) * 0.05,
+      };
+
+      facturas.push(nuevaFactura);
+      localStorage.setItem("facturas", JSON.stringify(facturas));
+      renderizarFacturas();
+      this.reset();
+      alert("Factura creada exitosamente.");
+    });
+
+    function verFactura(index) {
+      const factura = facturas[index];
+      alert(
+        `Factura: ${factura.numero}\n` +
+        `Cliente: ${factura.nombre}\n` +
+        `Correo: ${factura.correo}\n` +
+        `Modelo: ${factura.moto}\n` +
+        `Fecha: ${factura.fecha}\n` +
+        `Descripción: ${factura.descripcion}\n` +
+        `Total: $${factura.total.toLocaleString("es-CO")}`
+      );
+    }
+
+    function descargarFactura(index) {
+      const { jsPDF } = window.jspdf;
+      const factura = facturas[index];
+      const doc = new jsPDF();
+
+      doc.setFontSize(16);
+      doc.text("Factura de Servicio", 20, 20);
+      doc.setFontSize(12);
+      doc.text(`Número de Factura: ${factura.numero}`, 20, 30);
+      doc.text(`Fecha: ${factura.fecha}`, 20, 40);
+      doc.text(`Cliente: ${factura.nombre}`, 20, 50);
+      doc.text(`Correo: ${factura.correo}`, 20, 60);
+      doc.text(`Modelo de Moto: ${factura.moto}`, 20, 70);
+      doc.text(`Descripción: ${factura.descripcion}`, 20, 80);
+      doc.text(`Total a Pagar: $${factura.total.toLocaleString("es-CO")}`, 20, 95);
+      doc.text("Gracias por su compra.", 20, 115);
+
+      doc.save(`factura_${factura.numero}.pdf`);
+    }
+
+    renderizarFacturas();
+  </script>
+
+</body>
+</html>

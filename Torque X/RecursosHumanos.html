@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Recursos Humanos - Torque X</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        background-image: url('imagenes/R1.jpg');
+        background-size: 1250px 600px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        margin: 0; padding: 0;
+        text-align: center;
+    }
+    header {
+        background-color: #347df2;
+        color: white;
+        padding: 15px 0;
+        margin-bottom: 15px;
+    }
+    nav ul {
+        list-style: none;
+        padding: 0;
+    }
+    nav ul li {
+        display: inline;
+        margin: 0 15px;
+    }
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+    }
+    main {
+        max-width: 900px;
+        margin: 0 auto 60px;
+        background: rgba(255,255,255,0.9);
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.15);
+        padding: 20px;
+        text-align: left;
+    }
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    form label {
+        display: block;
+        margin-top: 12px;
+        font-weight: bold;
+        color: #333;
+    }
+    form input, form select {
+        width: 100%;
+        padding: 8px 10px;
+        margin-top: 4px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+    form button {
+        margin-top: 18px;
+        background-color: #347df2;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    form button:hover {
+        background-color: #2a62b9;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+    th {
+        background-color: #347df2;
+        color: white;
+    }
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    .acciones button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        color: white;
+    }
+    .editar-btn {
+        background-color: #f0ad4e;
+    }
+    .editar-btn:hover {
+        background-color: #ec971f;
+    }
+    .eliminar-btn {
+        background-color: #d9534f;
+    }
+    .eliminar-btn:hover {
+        background-color: #c9302c;
+    }
+    .resumen {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1>Torque X - Módulo de Recursos Humanos</h1>
+    <nav>
+        <ul>
+            <li><a href="inventario.html" id="inventario">Inventario</a></li>
+            <li><a href="ventas.html" id="ventas">Ventas</a></li>
+            <li><a href="clientes.html" id="clientes">Clientes</a></li>
+            <li><a href="proveedores.html" id="proveedores">Proveedores</a></li>
+            <li><a href="reportes.html" id="reportes">Reportes</a></li>
+              <li><a href="Contabilida.html" id="reportes">Contabilidad</a></li>
+                <li><a href="RecursosHumanos.html" id="reportes">Recursos Humanos</a></li>
+                  <li><a href="facturacion.html" id="reportes">Facturacion</a></li>
+                    <li><a href="empleados.html" id="reportes">Empleados</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <h2>Registrar Nuevo Empleado</h2>
+    <form id="rhForm">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" placeholder="Ej: Juan Pérez" required />
+
+        <label for="puesto">Puesto</label>
+        <input type="text" id="puesto" placeholder="Ej: Vendedor" required />
+
+        <label for="departamento">Departamento</label>
+        <input type="text" id="departamento" placeholder="Ej: Ventas" required />
+
+        <label for="fechaIngreso">Fecha de Ingreso</label>
+        <input type="date" id="fechaIngreso" required />
+
+        <label for="salario">Salario mensual ($)</label>
+        <input type="number" id="salario" min="0" step="0.01" placeholder="Ej: 1200.00" required />
+
+        <button type="submit">Agregar Empleado</button>
+    </form>
+
+    <h2>Listado de Empleados</h2>
+    <table id="tablaEmpleados">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Puesto</th>
+                <th>Departamento</th>
+                <th>Fecha Ingreso</th>
+                <th>Salario</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <div class="resumen" id="resumenNomina">
+        Nómina Total: $0.00
+    </div>
+</main>
+
+<script>
+    const formRH = document.getElementById('rhForm');
+    const tablaRHBody = document.querySelector('#tablaEmpleados tbody');
+    const resumenNomina = document.getElementById('resumenNomina');
+
+    let empleados = [];
+
+    function actualizarTablaRH() {
+        tablaRHBody.innerHTML = '';
+        let totalNomina = 0;
+
+        empleados.forEach((e, index) => {
+            const fila = tablaRHBody.insertRow();
+
+            fila.insertCell(0).textContent = e.nombre;
+            fila.insertCell(1).textContent = e.puesto;
+            fila.insertCell(2).textContent = e.departamento;
+            fila.insertCell(3).textContent = new Date(e.fechaIngreso).toLocaleDateString('es-ES');
+            fila.insertCell(4).textContent = `$${e.salario.toFixed(2)}`;
+
+            const accionesCell = fila.insertCell(5);
+            accionesCell.classList.add('acciones');
+
+            const btnEditar = document.createElement('button');
+            btnEditar.textContent = 'Editar';
+            btnEditar.className = 'editar-btn';
+            btnEditar.onclick = () => editarEmpleado(index);
+
+            const btnEliminar = document.createElement('button');
+            btnEliminar.textContent = 'Eliminar';
+            btnEliminar.className = 'eliminar-btn';
+            btnEliminar.onclick = () => eliminarEmpleado(index);
+
+            accionesCell.appendChild(btnEditar);
+            accionesCell.appendChild(btnEliminar);
+
+            totalNomina += e.salario;
+        });
+
+        resumenNomina.textContent = `Nómina Total: $${totalNomina.toFixed(2)}`;
+    }
+
+    function editarEmpleado(index) {
+        const e = empleados[index];
+        document.getElementById('nombre').value = e.nombre;
+        document.getElementById('puesto').value = e.puesto;
+        document.getElementById('departamento').value = e.departamento;
+        document.getElementById('fechaIngreso').value = e.fechaIngreso;
+        document.getElementById('salario').value = e.salario;
+        eliminarEmpleado(index);
+    }
+
+    function eliminarEmpleado(index) {
+        empleados.splice(index, 1);
+        actualizarTablaRH();
+    }
+
+    formRH.addEventListener('submit', e => {
+        e.preventDefault();
+
+        const nombre = formRH.querySelector('#nombre').value.trim();
+        const puesto = formRH.querySelector('#puesto').value.trim();
+        const departamento = formRH.querySelector('#departamento').value.trim();
+        const fechaIngreso = formRH.querySelector('#fechaIngreso').value;
+        const salario = parseFloat(formRH.querySelector('#salario').value);
+
+        if (!nombre || !puesto || !departamento || !fechaIngreso || isNaN(salario)) {
+            alert('Completa todos los campos correctamente.');
+            return;
+        }
+
+        empleados.push({ nombre, puesto, departamento, fechaIngreso, salario });
+        actualizarTablaRH();
+        formRH.reset();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Confirmar Cita</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e3f2fd;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    form, .datos-cita {
+      background: white;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 40px 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input, button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin-top: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input[disabled] {
+      background-color: #f0f0f0;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .acciones {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .acciones button {
+      flex: 1;
+    }
+
+    .oculto {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Confirmar Cita para Moto</h2>
+
+  <div id="citaGuardada" class="datos-cita oculto">
+    <h3>Cita Guardada</h3>
+    <input id="editNombre" type="text" placeholder="Nombre completo">
+    <input id="editCorreo" type="email" placeholder="Correo electrónico">
+    <input id="editFecha" type="date">
+    <input id="editMoto" type="text" placeholder="Moto seleccionada" disabled>
+
+    <div class="acciones">
+      <button onclick="guardarCambios()">Guardar Cambios</button>
+      <button onclick="eliminarCita()">Eliminar Cita</button>
+    </div>
+  </div>
+
+  <script>
+    // Mostrar datos guardados al cargar
+    window.onload = function () {
+      const cita = JSON.parse(localStorage.getItem("citaConfirmada"));
+      if (cita) {
+        mostrarCita(cita);
+      }
+    }
+
+    function mostrarCita(cita) {
+      document.getElementById("editNombre").value = cita.nombre || "";
+      document.getElementById("editCorreo").value = cita.correo || "";
+      document.getElementById("editFecha").value = cita.fecha || "";
+      document.getElementById("editMoto").value = cita.moto || "";
+      document.getElementById("citaGuardada").classList.remove("oculto");
+    }
+
+    function guardarCambios() {
+      const actualizada = {
+        nombre: document.getElementById("editNombre").value,
+        correo: document.getElementById("editCorreo").value,
+        fecha: document.getElementById("editFecha").value,
+        moto: document.getElementById("editMoto").value
+      };
+      localStorage.setItem("citaConfirmada", JSON.stringify(actualizada));
+      window.location.href = "pago.html";
+    }
+
+    function eliminarCita() {
+      localStorage.removeItem("citaConfirmada");
+      alert("Cita eliminada.");
+      document.getElementById("citaGuardada").classList.add("oculto");
+    }
+  </script>
+
+</body>
+</html>
+

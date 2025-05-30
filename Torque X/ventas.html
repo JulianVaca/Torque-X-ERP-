@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ventas - Torque X</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      background-image: url('imagenes/R1.jpg');
+      background-size: 1250px 600px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background-color: #347df2;
+      color: white;
+      padding: 15px 0;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+    nav ul li {
+      display: inline;
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    main {
+      padding: 20px;
+    }
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: white;
+      font-size: 18px;
+    }
+    th, td {
+      padding: 15px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #347df2;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      width: 90%;
+      margin: 20px auto;
+      border: 1px solid #ddd;
+      text-align: left;
+      font-size: 18px;
+    }
+    form input {
+      margin: 5px 0;
+      padding: 8px;
+      width: 100%;
+      font-size: 16px;
+    }
+    form button {
+      padding: 10px 15px;
+      font-size: 16px;
+      background-color: #347df2;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Torque X - Sistema de Gestión</h1>
+    <nav>
+      <ul>
+           <li><a href="inventario.html" id="inventario">Inventario</a></li>
+            <li><a href="ventas.html" id="ventas">Ventas</a></li>
+            <li><a href="clientes.html" id="clientes">Clientes</a></li>
+            <li><a href="proveedores.html" id="proveedores">Proveedores</a></li>
+            <li><a href="reportes.html" id="reportes">Reportes</a></li>
+              <li><a href="Contabilida.html" id="reportes">Contabilidad</a></li>
+                <li><a href="RecursosHumanos.html" id="reportes">Recursos Humanos</a></li>
+                  <li><a href="facturacion.html" id="reportes">Facturacion</a></li>
+                    <li><a href="empleados.html" id="reportes">Empleados</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Registrar Venta</h2>
+    <form id="ventaForm">
+      <label>Nombre del Cliente:</label>
+      <input type="text" id="cliente" required />
+      <label>Email:</label>
+      <input type="email" id="email" required />
+      <label>Teléfono:</label>
+      <input type="text" id="telefono" required />
+      <label>Producto Vendido:</label>
+      <input type="text" id="producto" required />
+      <button type="submit">Registrar Venta</button>
+    </form>
+
+    <h2>Historial de Ventas</h2>
+    <table id="tablaVentas">
+      <thead>
+        <tr>
+          <th>ID Venta</th>
+          <th>Cliente</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Producto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Ventas precargadas -->
+        <tr><td>C201</td><td>Juan Pérez</td><td>juan@example.com</td><td>123-456-789</td><td>Yamaha YZF-R1</td></tr>
+        <tr><td>C202</td><td>María Gómez</td><td>maria@example.com</td><td>987-654-321</td><td>Honda CBR1000RR</td></tr>
+        <!-- Aquí se agregarán dinámicamente las nuevas ventas -->
+      </tbody>
+    </table>
+  </main>
+
+  <script>
+    let contadorVenta = 210;
+
+    document.getElementById('ventaForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Obtener datos del formulario
+      const cliente = document.getElementById('cliente').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
+      const producto = document.getElementById('producto').value.trim();
+
+      if (!cliente || !email || !telefono || !producto) {
+        alert("Todos los campos son obligatorios.");
+        return;
+      }
+
+      // Crear nueva fila
+      contadorVenta++;
+      const nuevaFila = `
+        <tr>
+          <td>C${contadorVenta}</td>
+          <td>${cliente}</td>
+          <td>${email}</td>
+          <td>${telefono}</td>
+          <td>${producto}</td>
+        </tr>
+      `;
+
+      // Agregar al tbody
+      document.querySelector('#tablaVentas tbody').insertAdjacentHTML('beforeend', nuevaFila);
+
+      // Limpiar formulario
+      this.reset();
+    });
+  </script>
+</body>
+</html>

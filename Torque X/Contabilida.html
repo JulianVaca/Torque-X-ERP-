@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contabilidad - Torque X</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      background-image: url('imagenes/R1.jpg');
+      background-size: 1250px 600px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      background-color: #347df2;
+      color: white;
+      padding: 15px 0;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 30px auto;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2, h3 {
+      color: #347df2;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    th {
+      background-color: #347df2;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .total {
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 18px;
+      color: #275cb5;
+    }
+
+    input, button {
+      padding: 8px;
+      margin: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    button {
+      cursor: pointer;
+      background-color: #347df2;
+      color: white;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #275cb5;
+    }
+
+    .form-group {
+      margin: 10px 0;
+    }
+
+    .editando {
+      background-color: #ffe58f !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Torque X - Módulo de Contabilidad</h1>
+    <nav>
+      <ul>
+            <li><a href="ventas.html">Ventas</a></li>
+            <li><a href="inventario.html">Inventario</a></li>
+            <li><a href="clientes.html">Clientes</a></li>
+            <li><a href="RecursosHumanos.html">Recursos Humanos</a></li>
+             <li><a href="reportes.html">Reportes</a></li>
+            <li><a href="proveedores.html">Proveedores</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Nómina -->
+    <section>
+      <h2>Nómina de Empleados</h2>
+      <div class="form-group">
+        <input type="text" id="nombreEmpleado" placeholder="Nombre del empleado">
+        <input type="number" id="salarioEmpleado" placeholder="Salario">
+        <button onclick="agregarEmpleado()">Agregar</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Salario</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tablaNomina"></tbody>
+      </table>
+      <div class="total" id="totalNomina">Total Nómina: $0.00</div>
+    </section>
+
+    <hr style="margin: 40px 0;" />
+
+    <!-- Ventas -->
+    <section>
+      <h2>Ventas a Clientes</h2>
+      <div class="form-group">
+        <input type="text" id="cliente" placeholder="Cliente">
+        <input type="date" id="fechaVenta">
+        <input type="number" id="montoVenta" placeholder="Monto">
+        <button onclick="agregarVenta()">Agregar</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>Monto</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tablaVentas"></tbody>
+      </table>
+      <div class="total" id="totalVentas">Total Ventas: $0.00</div>
+    </section>
+  </main>
+
+  <script>
+    const empleados = [];
+    const ventas = [];
+
+    function renderNomina() {
+      const tabla = document.getElementById('tablaNomina');
+      const total = document.getElementById('totalNomina');
+      tabla.innerHTML = '';
+      let suma = 0;
+
+      empleados.forEach((emp, i) => {
+        suma += parseFloat(emp.salario);
+        tabla.innerHTML += `
+          <tr>
+            <td contenteditable="true" oninput="editarEmpleado(${i}, 'nombre', this.innerText)">${emp.nombre}</td>
+            <td contenteditable="true" oninput="editarEmpleado(${i}, 'salario', this.innerText)">${emp.salario}</td>
+            <td><button onclick="eliminarEmpleado(${i})">Eliminar</button></td>
+          </tr>`;
+      });
+
+      total.textContent = `Total Nómina: $${suma.toFixed(2)}`;
+    }
+
+    function agregarEmpleado() {
+      const nombre = document.getElementById('nombreEmpleado').value.trim();
+      const salario = parseFloat(document.getElementById('salarioEmpleado').value);
+
+      if (nombre && !isNaN(salario)) {
+        empleados.push({ nombre, salario });
+        renderNomina();
+        document.getElementById('nombreEmpleado').value = '';
+        document.getElementById('salarioEmpleado').value = '';
+      }
+    }
+
+    function eliminarEmpleado(i) {
+      empleados.splice(i, 1);
+      renderNomina();
+    }
+
+    function editarEmpleado(i, campo, valor) {
+      if (campo === 'salario') valor = parseFloat(valor) || 0;
+      empleados[i][campo] = valor;
+      renderNomina();
+    }
+
+    function renderVentas() {
+      const tabla = document.getElementById('tablaVentas');
+      const total = document.getElementById('totalVentas');
+      tabla.innerHTML = '';
+      let suma = 0;
+
+      ventas.forEach((v, i) => {
+        suma += parseFloat(v.monto);
+        tabla.innerHTML += `
+          <tr>
+            <td contenteditable="true" oninput="editarVenta(${i}, 'cliente', this.innerText)">${v.cliente}</td>
+            <td contenteditable="true" oninput="editarVenta(${i}, 'fecha', this.innerText)">${v.fecha}</td>
+            <td contenteditable="true" oninput="editarVenta(${i}, 'monto', this.innerText)">${v.monto}</td>
+            <td><button onclick="eliminarVenta(${i})">Eliminar</button></td>
+          </tr>`;
+      });
+
+      total.textContent = `Total Ventas: $${suma.toFixed(2)}`;
+    }
+
+    function agregarVenta() {
+      const cliente = document.getElementById('cliente').value.trim();
+      const fecha = document.getElementById('fechaVenta').value;
+      const monto = parseFloat(document.getElementById('montoVenta').value);
+
+      if (cliente && fecha && !isNaN(monto)) {
+        ventas.push({ cliente, fecha, monto });
+        renderVentas();
+        document.getElementById('cliente').value = '';
+        document.getElementById('fechaVenta').value = '';
+        document.getElementById('montoVenta').value = '';
+      }
+    }
+
+    function eliminarVenta(i) {
+      ventas.splice(i, 1);
+      renderVentas();
+    }
+
+    function editarVenta(i, campo, valor) {
+      if (campo === 'monto') valor = parseFloat(valor) || 0;
+      ventas[i][campo] = valor;
+      renderVentas();
+    }
+  </script>
+</body>
+</html>

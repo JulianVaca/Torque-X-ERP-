@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrito de Compras</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #216085bb;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .carrito {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      justify-content: center;
+    }
+
+    .producto-carrito {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .producto-carrito:hover {
+      transform: scale(1.05);
+    }
+
+    .producto-carrito img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .producto-carrito h3 {
+      margin: 10px 0;
+      font-size: 1.2rem;
+    }
+
+    .producto-carrito p {
+      font-size: 1rem;
+      color: #666;
+    }
+
+    .total {
+      font-size: 1.5rem;
+      text-align: center;
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+    }
+
+    .btn-agendar {
+      margin-top: 10px;
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-vaciar {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Carrito de Compras</h1>
+  
+  <div id="carrito" class="carrito"></div>
+  <button class="btn-vaciar" onclick="vaciarCarrito()">Vaciar Carrito</button>
+  <a href="catalogo.html" class="btn-agendar" style="background-color: #007bff;">Volver al Catálogo</a>
+
+  <script>
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const motos = [
+      {codigo: 'V101', modelo: 'Yamaha YZF-R1', marca: 'Yamaha', imagen: 'imagenes/R1 yzh.jpg', precio: 66000000, stock: 11},
+      {codigo: 'V102', modelo: 'Kawasaki Ninja ZX-10R', marca: 'Kawasaki', imagen: 'imagenes/kawasaki zx-10R.jpg', precio: 115000000, stock: 5},
+      {codigo: 'V103', modelo: 'Honda CBR1000RR', marca: 'Honda', imagen: 'imagenes/CBR 1000.jpg', precio: 60000000, stock: 10},
+      {codigo: 'V104', modelo: 'Ducati Panigale V4', marca: 'Ducati', imagen: 'imagenes/2023-ducati-panigale-v4---front-right.jpg', precio: 142000000, stock: 2},
+      {codigo: 'V105', modelo: 'BMW S1000RR', marca: 'BMW', imagen: 'imagenes/S1000rr.jpg', precio: 90000000, stock: 10},
+      {codigo: 'V106', modelo: 'Suzuki GSX-R1000', marca: 'Suzuki', imagen: 'imagenes/2018-Suzuki-GSXR1000-GSXR1000R-MotoGP-replica_2.jpg', precio: 104000000, stock: 7},
+      {codigo: 'V107', modelo: 'Yamaha MT-09', marca: 'Yamaha', imagen: 'imagenes/MT09.jpg', precio: 60000000, stock: 20}
+    ];
+
+    const carritoDiv = document.getElementById('carrito');
+    let total = 0;
+
+    if (carrito.length === 0) {
+      carritoDiv.innerHTML = '<p style="text-align:center; font-size:1.2rem;">Tu carrito está vacío.</p>';
+    }
+
+    carrito.forEach(item => {
+      const moto = motos.find(m => m.codigo === item.codigo);
+      if (!moto) return;
+
+      const totalProducto = moto.precio * item.cantidad;
+      total += totalProducto;
+
+      const productoDiv = document.createElement('div');
+      productoDiv.classList.add('producto-carrito');
+      productoDiv.innerHTML = `
+        <img src="${moto.imagen}" alt="${moto.modelo}" />
+        <h3>${moto.modelo}</h3>
+        <a href="AgendarCita.html?codigo=${moto.codigo}" class="btn-agendar">Agendar Cita</a>
+      `;
+
+      carritoDiv.appendChild(productoDiv);
+    });
+
+    document.getElementById('total').innerText = `Total a pagar: $${total.toLocaleString()}`;
+
+    function vaciarCarrito() {
+      const confirmar = confirm("¿Estás seguro de que deseas vaciar el carrito?");
+      if (confirmar) {
+        localStorage.removeItem('carrito');
+        location.reload();
+      }
+    }
+  </script>
+
+</body>
+</html>

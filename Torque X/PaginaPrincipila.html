@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Torque X - Página Principal</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* General */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Header */
+    header {
+      background-color: #33333300;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    .header-links {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .header-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+      margin: 0 20px;
+      transition: color 0.3s;
+    }
+
+    .header-links a:hover {
+      color: #00bcd4;
+    }
+
+    .cart-icon {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background-color: #00bcd4;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+      transition: background-color 0.3s;
+    }
+
+    .cart-icon:hover {
+      background-color: #008c9e;
+    }
+
+    .cart-icon img {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Main Content */
+    .main-content {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .main-content h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 40px;
+    }
+
+    .main-content p {
+      text-align: center;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #ffffff;
+    }
+
+    .catalog-link {
+      display: block;
+      width: 200px;
+      margin: 30px auto;
+      text-align: center;
+      background-color: #00bcd4;
+      color: white;
+      font-size: 1.2rem;
+      padding: 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+    }
+
+    .catalog-link:hover {
+      background-color: #008c9e;
+    }
+
+    /* Button to login */
+    .login-button {
+      display: block;
+      width: 200px;
+      margin: 30px auto;
+      text-align: center;
+      background-color: #00bcd4;
+      color: white;
+      font-size: 1.2rem;
+      padding: 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+    }
+
+    .login-button:hover {
+      background-color: #008c9e;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #33333300;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 1rem;
+      margin-top: 60px;
+    }
+
+    footer a {
+      color: #00bcd4;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      color: #008c9e;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Torque X</h1>
+    <div class="header-links">
+      <a href="catalogo.html">Catálogo</a>
+      <a href="reseñas.html">Reseñas</a>
+    </div>
+  </header>
+
+  <!-- Carrito Icon -->
+  <a href="carrito.html" class="cart-icon">
+    <img src="imagenes/CarritoC.jpg" alt="carrito de compras">
+  </a>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h2>Bienvenido a nuestra tienda de motos</h2>
+    <p>Explora nuestra variedad de motocicletas, diseñadas para brindarte la mejor experiencia en velocidad, seguridad y confort. Elige tu moto favorita y disfruta de una experiencia única sobre dos ruedas.</p>
+    <a href="catalogo.html" class="catalog-link">Ver Catálogo de Motos</a>
+    <!-- Login Button -->
+    <a href="login.html" class="login-button">salir</a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Torque X. Todos los derechos reservados.</p>
+  </footer>
+
+</body>
+</html>
